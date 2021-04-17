@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  rust:
+    build: ./docker/rust
+    volumes:
+      - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
+    command: bash -c "cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_fib.wasm -o ./../wasm_binaries/rust_fib.wasm"
+
+  php:
+    build: ./docker/php
+    volumes:
+      - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
+    depends_on:
+      - rust
+    tty: true
+
+

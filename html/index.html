@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <span>The 80'th Fibonacci number is: </span>
+    <script> 
+      fetch("rust_fib.wasm")
+        .then(response => response.arrayBuffer())
+        .then(result => WebAssembly.instantiate(result))
+        .then(wasmModule => {
+          const result = wasmModule.instance.exports.fib(80);
+          const text = document.createTextNode(result);
+          document.body.appendChild(text);
+        });
+    </script>
+  <head>
+  <body></body>
+<html>
