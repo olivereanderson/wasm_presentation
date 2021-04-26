@@ -1,0 +1,1 @@
+The wasm binaries created by the rust and binaryen toolchain are kept here. 
