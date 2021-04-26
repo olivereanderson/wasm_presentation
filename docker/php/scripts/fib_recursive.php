@@ -8,7 +8,9 @@ function recursive_fib(int $n) : int
     return recursive_fib($n - 1) + recursive_fib($n-2);
 }
 
-echo "The 80'th Fibonacci number is: " . (string) recursive_fib(80) . "\r\n";
-
-
+$timeBeforeFunctionCall = hrtime(true);
+$fib42 = recursive_fib(42);
+$timeAfterFunctionCall = hrtime(true);
+echo "The 42'nd Fibonacci number is: " . (string) $fib42 .  "\r\n";
+echo "The function completed after: " . (string) ($timeAfterFunctionCall - $timeBeforeFunctionCall)/1e+9 . " seconds" . PHP_EOL;
 

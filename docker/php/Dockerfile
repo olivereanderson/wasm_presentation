@@ -21,6 +21,10 @@ RUN curl -fsSL 'https://github.com/wasmerio/wasmer-php/archive/master.tar.gz' -o
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+RUN apt install -y libgmp-dev
+RUN docker-php-ext-install gmp
+
 WORKDIR /home/wasm_presentation/scripts
 COPY ./scripts .
 RUN composer require wasm/wasm
+RUN composer require ext-gmp

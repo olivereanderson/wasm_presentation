@@ -5,12 +5,26 @@ services:
     build: ./docker/rust
     volumes:
       - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
-    command: bash -c "cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_fib.wasm -o ./../wasm_binaries/rust_fib.wasm"
+    command: bash -c "cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_fib.wasm -o ./rust_fib.gc.wasm && wasm-opt -O3 --strip-producers ./rust_fib.gc.wasm -o ./../wasm_binaries/rust_fib.wasm"
 
   php:
     build: ./docker/php
     volumes:
       - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
+      - ./docker/php/scripts:/home/wasm_presentation/scripts
+    depends_on:
+      - rust
+    tty: true
+
+  browser_example:
+    image: python
+    ports:
+    - 8000:8000
+    volumes:
+    - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
+    - ./html:/home/wasm_presentation/html
+    working_dir: /home/wasm_presentation
+    command: bash -c "python3 -m http.server"
     depends_on:
       - rust
     tty: true

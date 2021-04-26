@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <span>The 80'th Fibonacci number is: </span>
+    <span>The 42'nd Fibonacci number is: </span>
     <script> 
-      fetch("rust_fib.wasm")
+      fetch("./../wasm_binaries/rust_fib.wasm")
         .then(response => response.arrayBuffer())
         .then(result => WebAssembly.instantiate(result))
         .then(wasmModule => {
-          const result = wasmModule.instance.exports.fib(80);
+          const result = wasmModule.instance.exports.fib(BigInt(42));
           const text = document.createTextNode(result);
           document.body.appendChild(text);
         });

@@ -1,4 +1,1 @@
 
-cargo build --target wasm32-unknown-unknown --release
-wasm-gc --no-demangle target/wasm32-unknown-unknown/release/wasm_fib.wasm -o wasm_fib.wasm
-python3 -m http.server

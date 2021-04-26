@@ -3,7 +3,7 @@
 function fib(int $n): int
 {
     if ($n <= 1) {
-        return n;
+        return $n;
     }
     $last_fib = 0;
     $fib = 1;
@@ -14,5 +14,9 @@ function fib(int $n): int
     }
     return $fib;
 }
+$timeBeforeFunctionCall = hrtime(true);
+$fib42 = fib(42);
+$timeAfterFunctionCall = hrtime(true);
+echo "The 42'nd Fibonacci number is: " . (string) $fib42 . PHP_EOL;
 
-echo "The 80'th Fibonacci number is: " . (string) fib(80) . "\r\n";
+echo "function call completed after:" . (string) ($timeAfterFunctionCall - $timeBeforeFunctionCall) . " nanoseconds \r\n";
