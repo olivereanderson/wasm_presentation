@@ -3,7 +3,7 @@
   <head>
     <span>The 42'nd Fibonacci number is: </span>
     <script> 
-      fetch("./../wasm_binaries/rust_fib.wasm")
+      fetch("rust_fib.wasm")
         .then(response => response.arrayBuffer())
         .then(result => WebAssembly.instantiate(result))
         .then(wasmModule => {

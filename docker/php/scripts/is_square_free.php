@@ -17,7 +17,7 @@ function isSquareFree(GMP $n) : bool
     return true;
 }
 
-$n = gmp_sub(gmp_pow(2,47),13);
+$n = gmp_sub(gmp_pow(2,47),115);
 $start = hrtime(true);
 isSquareFree($n);
 $end = hrtime(true);
