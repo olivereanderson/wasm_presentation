@@ -15,7 +15,7 @@ services:
       - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
       - ./docker/php/scripts:/home/wasm_presentation/scripts
       - ./html:/home/wasm_presentation/html
-    command: bash -c "ln -s /home/wasm_presentation/wasm_binaries/* /home/wasm_presentation/html/ && php -S 0.0.0.0:8000 -t /home/wasm_presentation/html/"
+    command: bash -c "ln -sf /home/wasm_presentation/wasm_binaries/* /home/wasm_presentation/html/ && php -S 0.0.0.0:8000 -t /home/wasm_presentation/html/"
     depends_on:
       - rust
     tty: true
