@@ -17,11 +17,15 @@ function isSquareFree(GMP $n) : bool
     return true;
 }
 
-$n = gmp_sub(gmp_pow(2,47),115);
-$start = hrtime(true);
-isSquareFree($n);
-$end = hrtime(true);
-$time = ($end - $start)/1e9;
-echo "completed in: " . $time . " seconds " . PHP_EOL;
 
 
+echo "The number " . (string) $argv[1] . "^" . (string) $argv[2] . " - " . (string) $argv[3] . " is " . PHP_EOL;
+$timeBeforeCallingFunction = hrtime(true);
+$n = gmp_sub(gmp_pow((int) $argv[1],(int) $argv[2]), (int) $argv[3]);
+if (isSquareFree($n)) {
+    $timeAfterCallingFunction = hrtime(true);
+    echo  " square free!" . PHP_EOL;
+} else {
+    echo " not square free!" . PHP_EOL;
+}
+echo "The function completed after " . (string) (($timeAfterCallingFunction - $timeBeforeCallingFunction)/1e9) . " seconds" . PHP_EOL;

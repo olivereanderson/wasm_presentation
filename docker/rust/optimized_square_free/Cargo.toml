@@ -1,14 +1,10 @@
 [package]
-name = "square_free"
+name = "optimized_square_free"
 version = "0.1.0"
-resolver = "2"
 authors = ["Oliver_Anderson <oliver.anderson@oxid-esales.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-uint = {version = "0.9.0", default-features = false}
 
-[lib]
-crate-type = ["cdylib"]

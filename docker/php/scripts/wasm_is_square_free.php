@@ -6,7 +6,7 @@ require_once './vendor/autoload.php';
 function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
 {
     $timeBeforeInstantiatingTheModule = hrtime(true);
-    $wasmBytes = file_get_contents('./../wasm_binaries/square_free.wasm');
+    $wasmBytes = file_get_contents('./../wasm_binaries/rust_wasm_square_free.wasm');
 
 
     if (false === $wasmBytes) {
@@ -34,7 +34,7 @@ function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
 
     $timeAfterConstruction = hrtime(true);
 
-    echo "instantiating the wasm module and extracting the function took: " . (string) ($timeAfterConstruction- $timeBeforeInstantiatingTheModule). " nanoseconds" . PHP_EOL;
+    // echo "instantiating the wasm module and extracting the function took: " . (string) ($timeAfterConstruction- $timeBeforeInstantiatingTheModule). " nanoseconds" . PHP_EOL;
 
     $baseArg = Wasm\Val::newI32($base);
     $exponentArg = Wasm\Val::newI32($exponent);
@@ -42,7 +42,7 @@ function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
 
     $args = new Wasm\Vec\Val([$baseArg->inner(), $exponentArg->inner(), $sub->inner()]);
 
-    echo "calling the exported function" . PHP_EOL;
+    // echo "calling the exported function" . PHP_EOL;
     $resultWasm = $is_square_free($args);
 
     $result = (new Wasm\Val($resultWasm[0]))->value();
@@ -54,7 +54,12 @@ function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
     }
 
 }
+echo "The number " . (string) $argv[1] . "^" . (string) $argv[2] . " - " . (string) $argv[3] . " is " . PHP_EOL;
 $timeBeforeCallingFunction = hrtime(true);
-isSquareFreeWasm(2,47,115);
-$timeAfterCallingFunction = hrtime(true);
+if (isSquareFreeWasm((int) $argv[1], (int) $argv[2], (int) $argv[3])) {
+    $timeAfterCallingFunction = hrtime(true);
+   echo  " square free!" . PHP_EOL;
+} else {
+    echo " not square free!" . PHP_EOL;
+}
 echo "The function completed after " . (string) (($timeAfterCallingFunction - $timeBeforeCallingFunction)/1e9) . " seconds" . PHP_EOL;
