@@ -1,4 +1,5 @@
 #!/bin/bash
 cd rust_wasm_square_free && cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_square_free.wasm -o ./rust_wasm_square_free.gc.wasm && wasm-opt -O3 --strip-producers ./rust_wasm_square_free.gc.wasm -o ./../wasm_binaries/rust_wasm_square_free.wasm && cd ./..
-cd rust_wasm_fib && cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_fib.wasm -o ./rust_fib.gc.wasm && wasm-opt -O3 --strip-producers ./rust_fib.gc.wasm -o ./../wasm_binaries/rust_fib.wasm
+cd rust_wasm_fib && cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_fib.wasm -o ./rust_fib.gc.wasm && wasm-opt -O3 --strip-producers ./rust_fib.gc.wasm -o ./../wasm_binaries/rust_fib.wasm && cd ./..
+cd rust_wasm_greeting && cargo build --target wasm32-unknown-unknown --release && wasm-gc --no-demangle target/wasm32-unknown-unknown/release/rust_wasm_greeting.wasm -o ./rust_greeting.gc.wasm && wasm-opt -O3 --strip-producers ./rust_greeting.gc.wasm -o ./../wasm_binaries/rust_greeting.wasm
 ls ./../wasm_binaries

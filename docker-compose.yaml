@@ -20,4 +20,13 @@ services:
       - rust
     tty: true
 
+  python:
+    build: ./docker/python
+    volumes:
+    - ./wasm_binaries:/home/wasm_presentation/wasm_binaries
+    - ./docker/python/scripts:/home/wasm_presentation/scripts
+    depends_on:
+      - rust
+    tty: true
+
 
