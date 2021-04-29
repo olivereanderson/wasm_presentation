@@ -3,10 +3,6 @@
 require_once './vendor/autoload.php';
 
 class FibonacciCalculator {
-    private $engine;
-    private $store;
-    private $module;
-    private $instance;
     private $fib;
 
     function __construct()
@@ -21,20 +17,20 @@ class FibonacciCalculator {
             exit(1);
         }
         // Create an Engine
-        $this->engine = Wasm\Engine::new();
+        $engine = Wasm\Engine::new();
 
         // Create a Store
-        $this->store = Wasm\Store::new($this->engine);
+        $store = Wasm\Store::new($engine);
 
         //echo 'Compiling module...'.PHP_EOL;
-        $this->module = Wasm\Module::new($this->store, $wasmBytes);
+        $module = Wasm\Module::new($store, $wasmBytes);
 
         //echo 'Instantiating module...'.PHP_EOL;
-        $this->instance = Wasm\Instance::new($this->store, $this->module);
+        $instance = Wasm\Instance::new($store, $module);
 
 
         // Extracting export...
-        $exports = $this->instance->exports();
+        $exports = $instance->exports();
 
         $this->fib = (new Wasm\Extern($exports[1]))->asFunc();
 

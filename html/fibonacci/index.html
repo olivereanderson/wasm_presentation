@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <head>
-    <span>The 42'nd Fibonacci number is: </span>
     <script> 
       fetch("rust_fib.wasm")
         .then(response => response.arrayBuffer())
@@ -13,5 +13,7 @@
         });
     </script>
   <head>
-  <body></body>
+  <body>
+    <span>The 42'nd Fibonacci number is: </span>
+  </body>
 <html>
