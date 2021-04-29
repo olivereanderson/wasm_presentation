@@ -8,7 +8,9 @@ fn main() {
     let sub = args[3].parse::<i32>().unwrap();
     let now = SystemTime::now();
     print!("{}^{} - {} is ... \r\n", base, exponent, sub);
-    if optimized_square_free::is_square_free(optimized_square_free::convert_input(base, exponent, sub)) {
+    if optimized_square_free::is_square_free(optimized_square_free::convert_input(
+        base, exponent, sub,
+    )) {
         print!("square free \r\n");
     } else {
         print!("not square free");
