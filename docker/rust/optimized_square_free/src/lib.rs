@@ -1,16 +1,17 @@
 use std::iter;
-use std::u128;
+use std::convert::TryInto;
 
-pub fn is_square_free(n: u128) -> bool {
+pub fn is_square_free(n: i64) -> bool {
     // Enough to test 4 followed by all odd squares that are less than n.
-    !iter::once(2_u128)
+    let n = n.abs();
+    !iter::once(2i64)
         .chain((3..n).into_iter().step_by(2))
         .map(|i| i.pow(2))
         .take_while(|i| i <= &n)
         .any(|i| (n % i) == 0)
 }
-pub fn convert_input(base: i32, exponent: i32, sub: i32) -> u128 {
-    u128::from(base.abs() as u32).pow(exponent.abs() as u32) - u128::from(sub.abs() as u32)
+pub fn convert_input(base: i32, exponent: i32, sub: i32) -> i64 {
+    (base as i64).pow(exponent.try_into().unwrap()) - (sub as i64)
 }
 
 #[cfg(test)]

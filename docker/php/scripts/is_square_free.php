@@ -1,27 +1,25 @@
 <?php declare(strict_types=1);
 
-function isSquareFree(GMP $n) : bool
+function isSquareFree(int $n) : bool 
 {
-    if(gmp_mod($n,gmp_init(4)) == 0) {
+    if (($n % 4) == 0) {
         return false;
     }
-    $i = gmp_init(3);
-    $square = gmp_pow($i,2);
+    $i = 3;
+    $square = 9;
     while ($square <= $n) {
-        if (gmp_mod($n,$square) == 0) {
+        if (($n % $square) == 0) {
             return false;
         }
-        $i = gmp_add($i,2);
-        $square = gmp_pow($i,2);
+        $i += 2;
+        $square = $i**2;
     }
-    return true;
+    return true; 
 }
-
-
 
 echo "The number " . (string) $argv[1] . "^" . (string) $argv[2] . " - " . (string) $argv[3] . " is " . PHP_EOL;
 $timeBeforeCallingFunction = hrtime(true);
-$n = gmp_sub(gmp_pow((int) $argv[1],(int) $argv[2]), (int) $argv[3]);
+$n = pow((int) $argv[1],(int) $argv[2]) - (int) $argv[3];
 if (isSquareFree($n)) {
     $timeAfterCallingFunction = hrtime(true);
     echo  " square free!" . PHP_EOL;
