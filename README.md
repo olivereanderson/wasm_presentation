@@ -33,5 +33,5 @@ python3 greet.py
 ```
 
 
-The javascript examples may be viewed in the browser by clicking on the link displayed in the terminal after running the docker-compose up: 
+The javascript examples may be viewed in the browser by clicking on the link displayed in the terminal after running docker-compose up: 
 ![image](serving_directory.png)
