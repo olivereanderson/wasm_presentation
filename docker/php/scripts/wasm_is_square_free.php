@@ -2,39 +2,41 @@
 
 require_once './vendor/autoload.php';
 
-
-function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
-{
-    $timeBeforeInstantiatingTheModule = hrtime(true);
-    $wasmBytes = file_get_contents('./../wasm_binaries/rust_wasm_square_free.wasm');
+$timeBeforeInstantiatingTheModule = hrtime(true);
+$wasmBytes = file_get_contents('./../wasm_binaries/rust_wasm_square_free.wasm');
 
 
-    if (false === $wasmBytes) {
-        echo '> Error loading module!'.PHP_EOL;
+if (false === $wasmBytes) {
+    echo '> Error loading module!'.PHP_EOL;
 
-        exit(1);
-    }
+    exit(1);
+}
 // Create an Engine
-    $engine = Wasm\Engine::new();
+$engine = Wasm\Engine::new();
 
 // Create a Store
-    $store = Wasm\Store::new($engine);
+$store = Wasm\Store::new($engine);
 
 //echo 'Compiling module...'.PHP_EOL;
-    $module = Wasm\Module::new($store, $wasmBytes);
+$module = Wasm\Module::new($store, $wasmBytes);
 
 //echo 'Instantiating module...'.PHP_EOL;
-    $instance = Wasm\Instance::new($store, $module);
+$instance = Wasm\Instance::new($store, $module);
 
 
 // Extracting export...
-    $exports = $instance->exports();
+$exports = $instance->exports();
 
-    $is_square_free = (new Wasm\Extern($exports[1]))->asFunc();
+$is_square_free = (new Wasm\Extern($exports[1]))->asFunc();
 
-    $timeAfterConstruction = hrtime(true);
+$timeAfterConstruction = hrtime(true);
 
-    // echo "instantiating the wasm module and extracting the function took: " . (string) ($timeAfterConstruction- $timeBeforeInstantiatingTheModule). " nanoseconds" . PHP_EOL;
+echo "instantiating the wasm module took: " . (string) ($timeAfterConstruction- $timeBeforeInstantiatingTheModule). " nanoseconds" . PHP_EOL;
+
+
+function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
+{
+    global $is_square_free; 
 
     $baseArg = Wasm\Val::newI32($base);
     $exponentArg = Wasm\Val::newI32($exponent);
@@ -54,9 +56,13 @@ function isSquareFreeWasm(int $base, int $exponent, int $sub) : bool
     }
 
 }
-echo "The number " . (string) $argv[1] . "^" . (string) $argv[2] . " - " . (string) $argv[3] . " is " . PHP_EOL;
+$base = (int) $argv[1];
+$exponent = (int) $argv[2];
+$sub = (int) $argv[3];
+
+echo "The number " . (string) $base . "^" . (string) $exponent . " - " . (string) $sub . " is " . PHP_EOL;
 $timeBeforeCallingFunction = hrtime(true);
-if (isSquareFreeWasm((int) $argv[1], (int) $argv[2], (int) $argv[3])) {
+if (isSquareFreeWasm($base, $exponent, $sub) == 1){
     $timeAfterCallingFunction = hrtime(true);
    echo  " square free!" . PHP_EOL;
 } else {

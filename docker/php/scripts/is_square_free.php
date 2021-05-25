@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-function isSquareFree(int $n) : bool 
+function isSquareFree(int $base, int $exponent, int $sub) : bool 
 {
+    $n = $base**$exponent - $sub; 
     if (($n % 4) == 0) {
         return false;
     }
@@ -17,10 +18,14 @@ function isSquareFree(int $n) : bool
     return true; 
 }
 
-echo "The number " . (string) $argv[1] . "^" . (string) $argv[2] . " - " . (string) $argv[3] . " is " . PHP_EOL;
+
+$base = (int) $argv[1];
+$exponent = (int) $argv[2];
+$sub =  (int) $argv[3];
+echo "The number " . (string) $base . "^" . (string) $exponent . " - " . (string) $sub . " is " . PHP_EOL;
+
 $timeBeforeCallingFunction = hrtime(true);
-$n = pow((int) $argv[1],(int) $argv[2]) - (int) $argv[3];
-if (isSquareFree($n)) {
+if (isSquareFree($base, $exponent, $sub)) {
     $timeAfterCallingFunction = hrtime(true);
     echo  " square free!" . PHP_EOL;
 } else {

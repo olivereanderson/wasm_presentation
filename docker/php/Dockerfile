@@ -24,4 +24,3 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /home/wasm_presentation/scripts
 COPY ./scripts .
 RUN composer require wasm/wasm
-RUN composer require ext-gmp
